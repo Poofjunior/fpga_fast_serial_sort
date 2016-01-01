@@ -43,8 +43,9 @@ assign new_data_fits = (new_data < cell_data) || (cell_state == EMPTY);
 
 assign cell_data_is_pushed = new_data_fits & (cell_state == OCCUPIED);
 
-logic priority_vector = {new_data_fits, prev_cell_data_pushed,
-                         cell_state, prev_cell_state};
+logic [4:0] priority_vector;
+assign priority_vector [4:0] = {shift_up, new_data_fits, prev_cell_data_pushed,
+                          cell_state, prev_cell_state};
 
 always_ff @ (posedge clk, posedge reset)
 begin
@@ -71,14 +72,15 @@ always_ff @ (posedge clk, posedge reset)
 begin
     if (reset)
     begin
-        cell_data <= DATA_WIDTH'b0;
+        cell_data <= 'b0;
     end
     else if (enable)
     begin
         casez (priority_vector)
-            'b?1??: cell_data <= prev_cell_data;
-            'b101?: cell_data <= new_cell_data;
-            'b?001: cell_data <= new_data;
+            'b??1??: cell_data <= prev_cell_data;
+            'b0101?: cell_data <= new_data;
+            'b0?001: cell_data <= new_data;
+            'b1?0??: cell_data <= next_cell_data;
         default: cell_data <= cell_data;
         endcase
     end
