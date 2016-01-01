@@ -17,13 +17,16 @@ module spi_wrapper_main
             input logic write,
            output logic miso);
 
+logic not_reset;
+assign not_reset = ~reset;
+
 logic enable;
 logic [DATA_WIDTH-1:0] unsorted_data;
 logic [DATA_WIDTH-1:0] sorted_data;
 
     fast_serial_sort #(.DATA_WIDTH(DATA_WIDTH),
                        .SIZE(SIZE))
-                     fast_serial_sort_inst(.clk(clk), .reset(reset),
+                     fast_serial_sort_inst(.clk(clk), .reset(not_reset),
                                            .enable(enable),
                                            .write(write),
                                            .unsorted_data(unsorted_data),
@@ -41,9 +44,9 @@ assign enable = new_data_pulse_gen[1] & ~new_data_pulse_gen[0];
 
 /// Clear new data as soon as it arrives to prevent it from being
 /// continuously loaded into the buffer.
-always_ff @ (posedge clk, posedge reset)
+always_ff @ (posedge clk, posedge not_reset)
 begin
-    if (reset)
+    if (not_reset)
     begin
         clear_new_data <= 'b0;
         new_data_pulse_gen[1:0] <= 'b0;
@@ -57,7 +60,7 @@ end
 
 spi_slave_interface #(DATA_WIDTH)
     spi_inst(.clk(clk),
-             .reset(reset),
+             .reset(not_reset),
              .cs(cs),
              .sck(sck),
              .mosi(mosi),
