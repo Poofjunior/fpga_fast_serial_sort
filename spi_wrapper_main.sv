@@ -11,11 +11,12 @@
  */
 module spi_wrapper_main
 #(parameter DATA_WIDTH = 8,
-  parameter SIZE = 10)
+  parameter SIZE = 3)
           ( input logic clk, reset,
             input logic sck, mosi, cs,
             input logic write,
-           output logic miso);
+           output logic miso,
+           output logic leds_out);
 
 logic not_reset;
 assign not_reset = ~reset;
@@ -23,6 +24,9 @@ assign not_reset = ~reset;
 logic enable;
 logic [DATA_WIDTH-1:0] unsorted_data;
 logic [DATA_WIDTH-1:0] sorted_data;
+
+assign leds_out = enable;//not_reset; // LED is on if the system is being reset.
+
 
     fast_serial_sort #(.DATA_WIDTH(DATA_WIDTH),
                        .SIZE(SIZE))
@@ -33,7 +37,6 @@ logic [DATA_WIDTH-1:0] sorted_data;
                                            .sorted_data(sorted_data));
 
 // SPI slave logic
-logic clear_new_data;
 logic [1:0] new_data_pulse_gen;
 logic new_data;
 
@@ -48,11 +51,9 @@ always_ff @ (posedge clk, posedge not_reset)
 begin
     if (not_reset)
     begin
-        clear_new_data <= 'b0;
         new_data_pulse_gen[1:0] <= 'b0;
     end
     else begin
-        clear_new_data <= new_data;
         new_data_pulse_gen[0] <= new_data_pulse_gen[1];
         new_data_pulse_gen[1] <= new_data;
     end
@@ -60,14 +61,14 @@ end
 
 spi_slave_interface #(DATA_WIDTH)
     spi_inst(.clk(clk),
-             .reset(not_reset),
              .cs(cs),
              .sck(sck),
              .mosi(mosi),
              .miso(miso),
-             .clear_new_data_flag(clear_new_data),
+             .clear_new_data_flag(enable),
              .synced_new_data_flag(new_data),
-             .data_to_send(sorted_data),
+             //.data_to_send(sorted_data),
+             .data_to_send('d32), // TODO: remove when done with debug
              .synced_data_received(unsorted_data));
 
 endmodule

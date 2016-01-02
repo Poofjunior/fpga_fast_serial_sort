@@ -10,7 +10,7 @@
 #define CS 10
 #define WRITE 14
 
-uint8_t unsorted_list[10] = {8, 9, 1, 3, 2, 5, 4, 0, 6, 7};
+uint8_t unsorted_list[10] = {10, 8, 9, 1, 3, 2, 5, 4, 6, 7};
 uint8_t sorted_list[10];
 
 void setup()
@@ -34,6 +34,7 @@ void setup()
 
 void loop()
 {
+/*
     digitalWrite(WRITE, HIGH);
     digitalWrite(CS, LOW);
     for (uint8_t unsorted_list_index = 0; unsorted_list_index < 10; ++unsorted_list_index)
@@ -44,7 +45,9 @@ void loop()
     digitalWrite(CS, HIGH);
     Serial.println("Wrote unsorted list");
 
+
     delay(1000);
+
 
     /// Read back sorted data.
     digitalWrite(WRITE, LOW);
@@ -65,5 +68,14 @@ void loop()
     Serial.println();
     digitalWrite(CS, HIGH);
     delay(2000);
-
+*/
+    digitalWrite(WRITE, LOW);
+    digitalWrite(CS, LOW);
+    for (uint8_t i = 0; i < 3; ++i)
+    {
+        Serial.println(SPI.transfer(0xff));
+    }
+    Serial.println();
+    digitalWrite(CS, HIGH);
+    delay(500);
 }

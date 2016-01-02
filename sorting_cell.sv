@@ -39,14 +39,15 @@ parameter EMPTY = 0;
 parameter OCCUPIED = 1;
 
 logic new_data_fits;
-assign new_data_fits = (new_data < cell_data) || (cell_state == EMPTY);
+//assign new_data_fits = (new_data < cell_data) || (cell_state == EMPTY);
 
-assign cell_data_is_pushed = new_data_fits & (cell_state == OCCUPIED);
+//assign cell_data_is_pushed = new_data_fits & (cell_state == OCCUPIED);
 
 logic [4:0] priority_vector;
-assign priority_vector [4:0] = {shift_up, new_data_fits, prev_cell_data_pushed,
-                          cell_state, prev_cell_state};
+//assign priority_vector [4:0] = {shift_up, new_data_fits, prev_cell_data_pushed,
+//                          cell_state, prev_cell_state};
 
+/*
 always_ff @ (posedge clk, posedge reset)
 begin
     if (reset)
@@ -67,22 +68,32 @@ begin
         endcase
     end
 end
+*/
 
 always_ff @ (posedge clk, posedge reset)
 begin
     if (reset)
     begin
-        cell_data <= 'b0;
+        cell_data <= 'hff;
     end
     else if (enable)
     begin
+//{shift_up, new_data_fits, prev_cell_data_pushed, cell_state, prev_cell_state}
+/*
         casez (priority_vector)
-            'b??1??: cell_data <= prev_cell_data;
+            'b0?1??: cell_data <= prev_cell_data;
             'b0101?: cell_data <= new_data;
             'b0?001: cell_data <= new_data;
-            'b1?0??: cell_data <= next_cell_data;
-        default: cell_data <= cell_data;
+            'b1????: cell_data <= next_cell_data;
+        //default: cell_data <= cell_data;
+        default: cell_data <= next_cell_data;
         endcase
+*/
+        cell_data <= next_cell_data;
+    end
+    else
+    begin
+        cell_data <= cell_data;
     end
 end
 

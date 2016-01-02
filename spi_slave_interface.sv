@@ -14,7 +14,7 @@
 
 module spi_slave_interface
 #(parameter    DATA_WIDTH  =  16)
-          ( input logic clk, reset,
+          ( input logic clk, //reset,
             input logic cs, sck, mosi,
            output logic miso,
             input logic clear_new_data_flag,
@@ -27,8 +27,6 @@ logic new_data_flag;
 logic [(DATA_WIDTH-1):0] shift_reg;
 logic [(DATA_WIDTH-1):0] data_received;
 
-//logic [4:0] bit_count;
-
 logic valid_clk;
 
 assign valid_clk = cs ? 1'b0   :
@@ -39,11 +37,10 @@ spi_data_ctrl #(DATA_WIDTH) spi_data_ctrl_instance(
                                 .cs(cs), .sck(sck),
                                 .set_new_data(set_new_data));
 
-assign safe_set_new_data = set_new_data & cs;
 
-always_ff @ (negedge valid_clk, posedge safe_set_new_data)
+always_ff @ (negedge valid_clk, posedge set_new_data)
 begin
-    if (safe_set_new_data)
+    if (set_new_data)
     begin
         int i;
         for(i = 0; i < DATA_WIDTH; i++)
@@ -75,16 +72,6 @@ synchronizer #(DATA_WIDTH) data_synchronizer(
                     .clk(clk),
                     .unsynced_data(data_received[DATA_WIDTH-1:0]),
                     .synced_data(synced_data_received[DATA_WIDTH-1:0]));
-
-// Count bits...
-/*
-/// FIXME: parameterize according to the top level.
-bit_counter #(5) spi_bit_count(
-                    .clk(sck),
-                    .reset(cs),
-                    .bit_count(bit_count[4:0]));
-*/
-
 
 always_ff @ (posedge set_new_data, posedge clear_new_data_flag)
 begin

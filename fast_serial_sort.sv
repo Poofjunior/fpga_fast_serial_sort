@@ -40,7 +40,7 @@ generate for (i = 0; i < SIZE; i++) begin: cell_array
                                     .prev_cell_data_pushed('b0), // pseudo-previous cell acts unpushed
                                     .prev_cell_state('b1), // pseudo-previous cell acts full
                                     .shift_up(~write),
-                                    .prev_cell_data('b0),
+                                    .prev_cell_data('b0), // irrelevant
                                     .new_data(unsorted_data),
                                     .next_cell_data(cell_data[i + 1]),
                                     .cell_data_is_pushed(cell_data_is_pushed[i]),
@@ -58,8 +58,8 @@ generate for (i = 0; i < SIZE; i++) begin: cell_array
                                     .shift_up(~write),
                                     .prev_cell_data(cell_data[i-1]),
                                     .new_data(unsorted_data),
-                                    .next_cell_data(),
-                                    .cell_data_is_pushed(),
+                                    .next_cell_data('b0),   // irrelevant
+                                    .cell_data_is_pushed(), // irrelevant
                                     .cell_state(cell_state[i]),
                                     .cell_data(cell_data[i]));
     end
