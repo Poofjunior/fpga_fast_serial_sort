@@ -30,6 +30,8 @@ SPI transfers are performed in __SPI_MODE_0__.
 
 I mocked up some Arduino code to demo the interface.
 
+__Note:__ I had to use shielded cable for the MISO, MOSI, and SCK lines to prevent crosstalk.
+
 ## FPGA Pinouts
 
 | Pin   | type   | description                                                                                |
