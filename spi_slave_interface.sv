@@ -14,7 +14,7 @@
 
 module spi_slave_interface
 #(parameter    DATA_WIDTH  =  16)
-          ( input logic clk, //reset,
+          ( input logic clk, 
             input logic cs, sck, mosi,
            output logic miso,
             input logic clear_new_data_flag,
@@ -170,22 +170,3 @@ begin
 end
 
 endmodule
-
-
-
-/*
-module bit_counter
-#(parameter WIDTH = 5)
-                  ( input logic clk, reset,
-                   output logic [WIDTH - 1:0] bit_count);
-
-always_ff @ (posedge clk, posedge reset)
-begin
-    if (reset)
-        bit_count <= 'b0;
-    else
-        bit_count <= bit_count + 'b1;
-end
-
-endmodule
-*/

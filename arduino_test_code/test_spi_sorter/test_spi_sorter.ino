@@ -34,7 +34,7 @@ void setup()
 
 void loop()
 {
-/*
+    delay(5000);
     digitalWrite(WRITE, HIGH);
     digitalWrite(CS, LOW);
     for (uint8_t unsorted_list_index = 0; unsorted_list_index < 10; ++unsorted_list_index)
@@ -43,7 +43,13 @@ void loop()
     }
     delayMicroseconds(10);
     digitalWrite(CS, HIGH);
-    Serial.println("Wrote unsorted list");
+    Serial.println("Unsorted List:");
+    for (uint8_t i = 0; i < 10; ++i)
+    {
+        Serial.println(unsorted_list[i]);
+    }
+    Serial.println();
+    digitalWrite(CS, HIGH);
 
 
     delay(1000);
@@ -52,8 +58,6 @@ void loop()
     /// Read back sorted data.
     digitalWrite(WRITE, LOW);
     digitalWrite(CS, LOW);
-    // dummy transfer:
-    SPI.transfer(0xff);
     for (uint8_t sorted_list_index = 0; sorted_list_index < 10;
          ++sorted_list_index)
     {
@@ -68,14 +72,4 @@ void loop()
     Serial.println();
     digitalWrite(CS, HIGH);
     delay(2000);
-*/
-    digitalWrite(WRITE, LOW);
-    digitalWrite(CS, LOW);
-    for (uint8_t i = 0; i < 3; ++i)
-    {
-        Serial.println(SPI.transfer(0xff));
-    }
-    Serial.println();
-    digitalWrite(CS, HIGH);
-    delay(500);
 }

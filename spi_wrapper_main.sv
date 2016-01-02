@@ -11,7 +11,7 @@
  */
 module spi_wrapper_main
 #(parameter DATA_WIDTH = 8,
-  parameter SIZE = 3)
+  parameter SIZE = 10)
           ( input logic clk, reset,
             input logic sck, mosi, cs,
             input logic write,
@@ -67,8 +67,7 @@ spi_slave_interface #(DATA_WIDTH)
              .miso(miso),
              .clear_new_data_flag(enable),
              .synced_new_data_flag(new_data),
-             //.data_to_send(sorted_data),
-             .data_to_send('d32), // TODO: remove when done with debug
+             .data_to_send(sorted_data),
              .synced_data_received(unsorted_data));
 
 endmodule
