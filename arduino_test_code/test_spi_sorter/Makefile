@@ -11,13 +11,13 @@ ARDUINO_LIBS += SPI
 # Default user-defined libraries directory
 #USER_LIB_PATH += ../../../teensy_lib
 
-BRANCH := $(shell git branch | grep "*")
-BUILD_DATE := $(shell date)
-AUTHOR := $(shell whoami)
-
-CPPFLAGS += -DBRANCH='"$(BUILD_VERSION_MAIN_GIT)"' \
-            -DBUILD_DATE='"$(BUILD_DATE)"' \
-            -DAUTHOR='"$(AUTHOR)"'
+#BRANCH := $(shell git branch | grep "*")
+#BUILD_DATE := $(shell date)
+#AUTHOR := $(shell whoami)
+#
+#CPPFLAGS += -DBRANCH='"$(BUILD_VERSION_MAIN_GIT)"' \
+#            -DBUILD_DATE='"$(BUILD_DATE)"' \
+#            -DAUTHOR='"$(AUTHOR)"'
 
 # Teensy explicitly requires Arduino 1.0.x as of Nov 2014
 # ARDUINO_DIR should be defined in your Makefile. Otherwise, you may

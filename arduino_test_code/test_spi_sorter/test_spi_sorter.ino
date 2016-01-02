@@ -4,7 +4,6 @@
  * \date September 2015
  */
 
-#include "preamble.h"
 #include <SPI.h>
 
 #define CS 10
@@ -13,16 +12,18 @@
 
 const size_t LIST_SIZE = 20;
 
+/*
 uint8_t unsorted_list[LIST_SIZE] = {10, 18, 9, 1, 13, 12, 5, 14, 16, 17,
                                     19, 8, 20, 2, 4, 11, 5, 6, 3, 7};
+*/
+uint8_t unsorted_list[LIST_SIZE] = {10, 18, 9, 1, 13, 12, 5, 14, 5, 17,
+                                    5, 8, 20, 2, 4, 11, 5, 6, 3, 7};
 uint8_t sorted_list[LIST_SIZE];
 
 void setup()
 {
     Serial.begin(115200);
 
-/// Print build information.
-    preamble();
     pinMode(CS, OUTPUT);
     digitalWrite(CS, HIGH);
 
