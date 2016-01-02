@@ -61,7 +61,7 @@ set_location_assignment PIN_T12 -to miso
 set_global_assignment -name POWER_PRESET_COOLING_SOLUTION "23 MM HEAT SINK WITH 200 LFPM AIRFLOW"
 set_global_assignment -name POWER_BOARD_THERMAL_MODEL "NONE (CONSERVATIVE)"
 set_location_assignment PIN_R8 -to clk
-set_location_assignment PIN_J15 -to reset
+set_location_assignment PIN_C3 -to reset
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to miso
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to mosi
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to sck
@@ -79,4 +79,5 @@ set_location_assignment PIN_D3 -to write
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to write
 set_location_assignment PIN_D9 -to leds_out
 set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to leds_out
+set_instance_assignment -name IO_STANDARD "3.3-V LVCMOS" -to reset
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top

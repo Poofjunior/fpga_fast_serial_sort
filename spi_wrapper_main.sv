@@ -11,30 +11,23 @@
  */
 module spi_wrapper_main
 #(parameter DATA_WIDTH = 8,
-  parameter SIZE = 10)
+  parameter SIZE = 20)
           ( input logic clk, reset,
             input logic sck, mosi, cs,
             input logic write,
-           output logic miso,
-           output logic leds_out);
-
-logic not_reset;
-assign not_reset = ~reset;
+           output logic miso);
 
 logic enable;
 logic [DATA_WIDTH-1:0] unsorted_data;
 logic [DATA_WIDTH-1:0] sorted_data;
 
-assign leds_out = enable;//not_reset; // LED is on if the system is being reset.
-
-
-    fast_serial_sort #(.DATA_WIDTH(DATA_WIDTH),
-                       .SIZE(SIZE))
-                     fast_serial_sort_inst(.clk(clk), .reset(not_reset),
-                                           .enable(enable),
-                                           .write(write),
-                                           .unsorted_data(unsorted_data),
-                                           .sorted_data(sorted_data));
+fast_serial_sort #(.DATA_WIDTH(DATA_WIDTH),
+                   .SIZE(SIZE))
+                 fast_serial_sort_inst(.clk(clk), .reset(reset),
+                                       .enable(enable),
+                                       .write(write),
+                                       .unsorted_data(unsorted_data),
+                                       .sorted_data(sorted_data));
 
 // SPI slave logic
 logic [1:0] new_data_pulse_gen;
@@ -47,9 +40,9 @@ assign enable = new_data_pulse_gen[1] & ~new_data_pulse_gen[0];
 
 /// Clear new data as soon as it arrives to prevent it from being
 /// continuously loaded into the buffer.
-always_ff @ (posedge clk, posedge not_reset)
+always_ff @ (posedge clk, posedge reset)
 begin
-    if (not_reset)
+    if (reset)
     begin
         new_data_pulse_gen[1:0] <= 'b0;
     end
