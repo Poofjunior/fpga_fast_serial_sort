@@ -28,6 +28,8 @@ The __reset__ pin must currently be toggled before sending a new input data.
 
 SPI transfers are performed in __SPI_MODE_0__.
 
+I mocked up some Arduino code to demo the interface.
+
 ## FPGA Pinouts
 
 | Pin   | type   | description                                                                                |
