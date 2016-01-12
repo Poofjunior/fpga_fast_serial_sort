@@ -19,7 +19,7 @@ An input unsorted may be any length of words up to SIZE elements long.
 
 * __signed and unsigned__ input data, provided that you change the inputs/outputs like so
 __UNSIGNED Version:__
-
+    
     module sorting_cell
     #(parameter DATA_WIDTH = 8)
               ( input logic clk, reset, enable,
@@ -34,7 +34,7 @@ __UNSIGNED Version:__
                output logic [(DATA_WIDTH-1):0] cell_data);
 
 __SIGNED Version:__
-
+    
     module sorting_cell
     #(parameter DATA_WIDTH = 8)
               ( input logic clk, reset, enable,
