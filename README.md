@@ -17,6 +17,37 @@ such that each element can be transferred as a series of 1 or more bytes within 
 * __SIZE__ is the maximum number of elements that can be stored in this peripheral.
 An input unsorted may be any length of words up to SIZE elements long.
 
+* __signed and unsigned__ input data, provided that you change the inputs/outputs like so
+__UNSIGNED Version:__
+
+    module sorting_cell
+    #(parameter DATA_WIDTH = 8)
+              ( input logic clk, reset, enable,
+                input logic prev_cell_data_pushed,
+                input logic prev_cell_state,
+                input logic shift_up,
+                input logic [(DATA_WIDTH-1):0] prev_cell_data,
+                input logic [(DATA_WIDTH-1):0] new_data,
+                input logic [(DATA_WIDTH-1):0] next_cell_data,
+               output logic cell_data_is_pushed,
+               output logic cell_state,
+               output logic [(DATA_WIDTH-1):0] cell_data);
+
+__SIGNED Version:__
+
+    module sorting_cell
+    #(parameter DATA_WIDTH = 8)
+              ( input logic clk, reset, enable,
+                input logic prev_cell_data_pushed,
+                input logic prev_cell_state,
+                input logic shift_up,
+                input logic signed [(DATA_WIDTH-1):0] prev_cell_data,
+                input logic signed [(DATA_WIDTH-1):0] new_data,
+                input logic signed [(DATA_WIDTH-1):0] next_cell_data,
+               output logic cell_data_is_pushed,
+               output logic cell_state,
+               output logic signed [(DATA_WIDTH-1):0] cell_data);
+
 Note that this sorting algorthim is implemented for positive integers only, although accepting signed values should be a one line change in the SystemVerilog source files.
 
 ## Interface
