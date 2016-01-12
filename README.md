@@ -1,4 +1,4 @@
-# fast_serial_sort
+# fpga_linear_time_sorter
 
 a parallel sorting algorithm implemented in hardware that sorts data in linear time as it arrives serially
 
@@ -49,9 +49,8 @@ __SIGNED Version:__
                output logic cell_state,
                output logic signed [(DATA_WIDTH-1):0] cell_data);
 
-Note that this sorting algorthim is implemented for positive integers only, although accepting signed values should be a one line change in the SystemVerilog source files.
-
 ## Interface
+
 Unsorted list data is transferred serially over an SPI interface.
 An extra gpio pin (__write__) is devoted to indicate whether or not the interface is being used to write data (the unsorted list) or read data back (the sorted list). An extra pin is also devoted to resetting the peripheral.
 The __write__ pin could be removed and the read/write signal could be input as the first SPI transfer, but it's an optimization for later.
