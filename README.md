@@ -18,6 +18,7 @@ such that each element can be transferred as a series of 1 or more bytes within 
 An input unsorted may be any length of words up to SIZE elements long.
 
 * __signed and unsigned__ input data, provided that you change the inputs/outputs like so
+
 __UNSIGNED Version:__
     
     module sorting_cell
